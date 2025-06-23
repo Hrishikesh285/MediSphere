@@ -22,8 +22,7 @@ const Dashboard = () => {
   const [greeting, setGreeting] = useState('');
   const [snoozeDuration, setSnoozeDuration] = useState(15); // minutes
   const [alarmSound] = useState(new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3'));
-
-  // Check for medication times every minute
+  
   useEffect(() => {
     const checkMedications = () => {
       const now = new Date();
@@ -34,21 +33,18 @@ const Dashboard = () => {
             const scheduledTime = new Date();
             scheduledTime.setHours(parseInt(hours), parseInt(minutes), 0, 0);
 
-            // Check if it's time for medication (within 1 minute)
             if (Math.abs(now.getTime() - scheduledTime.getTime()) < 60000) {
-              // Check if notification hasn't been sent yet for this dose
               const doseId = `${medication.id}-${format(scheduledTime, 'yyyy-MM-dd-HH-mm')}`;
               const existingDose = medication.history.find(d => d.id === doseId);
 
               if (!existingDose) {
-                // Play alarm sound
                 alarmSound.play();
                 
                 if (Notification.permission === "granted") {
                   new Notification("Medication Reminder", {
                     body: `Time to take ${medication.name} (${medication.dosage})`,
                     icon: "/favicon.svg",
-                    requireInteraction: true // Keep notification until user interacts
+                    requireInteraction: true 
                   });
                 }
               }
@@ -58,16 +54,13 @@ const Dashboard = () => {
       });
     };
 
-    // Request notification permission
     if ("Notification" in window) {
       Notification.requestPermission();
     }
 
-    // Check medications immediately and set up interval
     checkMedications();
     const medicationTimer = setInterval(checkMedications, 60000);
 
-    // Update current time every minute
     const timeTimer = setInterval(() => {
       setCurrentTime(new Date());
     }, 60000);
@@ -77,8 +70,7 @@ const Dashboard = () => {
       clearInterval(timeTimer);
     };
   }, [medications, alarmSound]);
-  
-  // Set greeting based on time of day
+
   useEffect(() => {
     const hour = currentTime.getHours();
     if (hour < 12) {
@@ -124,10 +116,8 @@ const Dashboard = () => {
     const dose = medication.history.find(d => d.id === doseId);
     if (!dose) return;
 
-    // Calculate new time
     const newTime = new Date(new Date(dose.scheduledTime).getTime() + snoozeDuration * 60000);
-    
-    // Update medication schedule
+  
     updateMedication(medicationId, {
       history: medication.history.map(d => 
         d.id === doseId 
