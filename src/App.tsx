@@ -17,7 +17,6 @@ function App() {
   const [appReady, setAppReady] = useState(false);
 
   useEffect(() => {
-    // Simulate app initialization
     const timer = setTimeout(() => {
       setAppReady(true);
     }, 1000);
