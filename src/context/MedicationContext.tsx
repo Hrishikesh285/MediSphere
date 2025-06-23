@@ -2,7 +2,7 @@ import { createContext, useState, ReactNode, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { addDays, format, isToday, isFuture, parseISO, differenceInDays, startOfDay, endOfDay, isWithinInterval } from 'date-fns';
 
-// Define types
+
 export interface Medication {
   id: string;
   name: string;
@@ -88,7 +88,6 @@ export const MedicationContext = createContext<MedicationContextType>({
   deleteAppointment: () => {},
 });
 
-// Mock data for initial state
 const initialMedications: Medication[] = [
   {
     id: '1',
@@ -305,7 +304,6 @@ export const MedicationProvider = ({ children }: MedicationProviderProps) => {
           const scheduledTime = new Date();
           scheduledTime.setHours(parseInt(hours), parseInt(minutes), 0, 0);
           
-          // Only add upcoming doses that haven't been taken today
           if (scheduledTime > now) {
             const existingDose = med.history.find(dose => 
               isToday(parseISO(dose.scheduledTime)) && 
@@ -339,11 +337,9 @@ export const MedicationProvider = ({ children }: MedicationProviderProps) => {
     let takenDoses = 0;
 
     medications.forEach(med => {
-      // Get all doses that should have been taken by now
       med.history.forEach(dose => {
         const doseTime = parseISO(dose.scheduledTime);
         
-        // Only count doses scheduled for today that are in the past
         if (isWithinInterval(doseTime, { start: startOfToday, end: now })) {
           totalScheduledDoses++;
           if (dose.status === 'taken') {
@@ -352,7 +348,6 @@ export const MedicationProvider = ({ children }: MedicationProviderProps) => {
         }
       });
 
-      // Add scheduled doses for today that haven't been recorded yet
       if (med.schedule.days.includes(format(now, 'EEEE'))) {
         med.schedule.times.forEach(time => {
           const [hours, minutes] = time.split(':');
