@@ -27,8 +27,7 @@ const MedicationScheduleCard = ({ medication, status }: MedicationScheduleCardPr
   const [expanded, setExpanded] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const { markDoseTaken, updateMedication, addToCart } = useMedication();
-  
-  // Editing state
+
   const [editedMedication, setEditedMedication] = useState(medication);
   const [newTime, setNewTime] = useState('');
   
