@@ -30,7 +30,6 @@ const Register = () => {
     e.preventDefault();
     if (!validatePassword()) return;
     await register(name, email, password);
-    // Navigation is handled by auth context and route protection
   };
 
   return (
