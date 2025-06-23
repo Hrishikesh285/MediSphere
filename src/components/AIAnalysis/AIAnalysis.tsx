@@ -12,15 +12,13 @@ const AIAnalysis = () => {
   const [timeRange, setTimeRange] = useState('month');
   
   const adherenceScore = getMedicationAdherence();
-  
-  // Mock data for adherence over time
+
   const adherenceTrend = {
     month: [85, 92, 78, 88, 95, 90, 85, 82, 88, 92, 95, 96, 95, 90, 92, 88, 89, 92, 95, 90, 92, 94, 95, 88, 87, 89, 92, 95, 94, 92],
     week: [88, 92, 95, 90, 92, 94, 95],
     day: [95, 92, 90, 92]
   };
-  
-  // Generate suggestions based on adherence
+
   const getSuggestions = () => {
     if (adherenceScore >= 90) {
       return [
@@ -28,14 +26,16 @@ const AIAnalysis = () => {
         "Consider setting up a backup reminder system for emergencies.",
         "Share your success with your healthcare provider at your next visit."
       ];
-    } else if (adherenceScore >= 70) {
+    } 
+    else if (adherenceScore >= 70) {
       return [
         "Try setting alarms at the same times every day to build a routine.",
         "Use a pill organizer to help track which medications you've taken.",
         "Consider setting reminders on your mobile device.",
         "Pair medication taking with an existing daily habit like brushing teeth."
       ];
-    } else {
+    } 
+    else {
       return [
         "Your medication adherence needs improvement. Let's work on a plan.",
         "Set multiple reminders throughout the day for your medications.",
@@ -46,7 +46,6 @@ const AIAnalysis = () => {
     }
   };
   
-  // Get adherence status and color
   const getAdherenceStatus = () => {
     if (adherenceScore >= 90) {
       return {
