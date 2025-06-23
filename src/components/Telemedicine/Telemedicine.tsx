@@ -20,19 +20,16 @@ const Telemedicine = () => {
   const [showBookingForm, setShowBookingForm] = useState(false);
   const [activeTab, setActiveTab] = useState('appointments');
   
-  // Sort appointments by date
   const sortedAppointments = [...appointments].sort((a, b) => {
     const dateA = new Date(`${a.date} ${a.time}`);
     const dateB = new Date(`${b.date} ${b.time}`);
     return dateA.getTime() - dateB.getTime();
   });
   
-  // Filter upcoming appointments
   const upcomingAppointments = sortedAppointments.filter(
     app => app.status === 'scheduled'
   );
   
-  // Filter past appointments
   const pastAppointments = sortedAppointments.filter(
     app => app.status === 'completed' || app.status === 'cancelled'
   );
