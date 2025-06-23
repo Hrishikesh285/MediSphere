@@ -7,19 +7,16 @@ import bcrypt from 'bcryptjs';
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Middleware
+
 app.use(express.json());
 app.use(cors());
 
-// In-memory database (would use a real database in production)
 const users = [];
 const medications = [];
 const appointments = [];
 
-// JWT secret (would be an environment variable in production)
 const JWT_SECRET = 'medisphere-secret-key';
 
-// Authentication middleware
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
@@ -33,21 +30,16 @@ const authenticateToken = (req, res, next) => {
   });
 };
 
-// Routes
-// Auth routes
 app.post('/api/auth/register', async (req, res) => {
   try {
     const { name, email, password } = req.body;
     
-    // Check if user already exists
     if (users.find(user => user.email === email)) {
       return res.status(400).json({ message: 'User already exists' });
     }
-    
-    // Hash password
+
     const hashedPassword = await bcrypt.hash(password, 10);
     
-    // Create new user
     const newUser = {
       id: uuidv4(),
       name,
@@ -57,7 +49,6 @@ app.post('/api/auth/register', async (req, res) => {
     
     users.push(newUser);
     
-    // Generate token
     const token = jwt.sign({ id: newUser.id, email: newUser.email }, JWT_SECRET, { expiresIn: '1h' });
     
     res.status(201).json({ 
@@ -78,19 +69,16 @@ app.post('/api/auth/login', async (req, res) => {
   try {
     const { email, password } = req.body;
     
-    // Find user
     const user = users.find(user => user.email === email);
     if (!user) {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
     
-    // Validate password
     const isValidPassword = await bcrypt.compare(password, user.password);
     if (!isValidPassword) {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
-    
-    // Generate token
+  
     const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, { expiresIn: '1h' });
     
     res.json({ 
@@ -107,7 +95,6 @@ app.post('/api/auth/login', async (req, res) => {
   }
 });
 
-// Medication routes
 app.get('/api/medications', authenticateToken, (req, res) => {
   const userMedications = medications.filter(med => med.userId === req.user.id);
   res.json(userMedications);
@@ -156,7 +143,6 @@ app.delete('/api/medications/:id', authenticateToken, (req, res) => {
   res.status(204).send();
 });
 
-// Appointment routes
 app.get('/api/appointments', authenticateToken, (req, res) => {
   const userAppointments = appointments.filter(app => app.userId === req.user.id);
   res.json(userAppointments);
@@ -205,7 +191,6 @@ app.delete('/api/appointments/:id', authenticateToken, (req, res) => {
   res.status(204).send();
 });
 
-// Start server
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
