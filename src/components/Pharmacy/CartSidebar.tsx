@@ -10,8 +10,7 @@ interface CartSidebarProps {
 
 const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
   const { cart, removeFromCart, clearCart } = useMedication();
-  
-  // Close cart when clicking outside
+
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -29,7 +28,6 @@ const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
   }, [isOpen, onClose]);
   
   const handleCheckout = () => {
-    // In a real app, this would navigate to checkout
     alert('Processing checkout...');
     clearCart();
     onClose();
