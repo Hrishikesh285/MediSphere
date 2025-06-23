@@ -24,7 +24,7 @@ const MedicationStockCard = ({ medication }: MedicationStockCardProps) => {
   
   const handleAddToCart = () => {
     addToCart(medication, quantity);
-    setQuantity(1); // Reset quantity after adding to cart
+    setQuantity(1); 
   };
   
   const getLowStockWarning = () => {
