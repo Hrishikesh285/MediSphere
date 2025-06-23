@@ -54,8 +54,7 @@ const AddMedicationModal = ({ onClose }: AddMedicationModalProps) => {
   
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Validate form
+   
     if (!name || !dosage || !instructions || selectedDays.length === 0 || times.some(t => !t)) {
       alert('Please fill in all required fields');
       return;
