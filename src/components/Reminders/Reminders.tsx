@@ -22,7 +22,6 @@ const Reminders = () => {
   const [filterStatus, setFilterStatus] = useState<string | null>(null);
   const [showAddModal, setShowAddModal] = useState(false);
 
-  // Filter medications based on search term and filter status
   const filteredMedications = medications.filter(med => {
     const matchesSearch = med.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          med.dosage.toLowerCase().includes(searchTerm.toLowerCase());
