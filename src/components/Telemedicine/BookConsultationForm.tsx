@@ -19,7 +19,6 @@ const BookConsultationForm = ({ onClose }: BookConsultationFormProps) => {
   const [selectedTime, setSelectedTime] = useState('09:00');
   const [notes, setNotes] = useState('');
   
-  // Mock data for doctors
   const doctors = [
     { id: '1', name: 'Dr. Sarah Smith', specialty: 'Cardiology', available: true },
     { id: '2', name: 'Dr. Michael Johnson', specialty: 'Endocrinology', available: true },
@@ -27,7 +26,6 @@ const BookConsultationForm = ({ onClose }: BookConsultationFormProps) => {
     { id: '4', name: 'Dr. Robert Wilson', specialty: 'Neurology', available: false },
   ];
   
-  // Mock data for specialties
   const specialties = [
     'Cardiology',
     'Endocrinology',
@@ -37,7 +35,6 @@ const BookConsultationForm = ({ onClose }: BookConsultationFormProps) => {
     'Dermatology'
   ];
   
-  // Mock data for available times
   const availableTimes = [
     '09:00', '09:30', '10:00', '10:30', '11:00', '11:30',
     '13:00', '13:30', '14:00', '14:30', '15:00', '15:30'
@@ -46,7 +43,6 @@ const BookConsultationForm = ({ onClose }: BookConsultationFormProps) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Find the selected doctor
     const doctor = doctors.find(d => d.id === selectedDoctor);
     
     addAppointment({
