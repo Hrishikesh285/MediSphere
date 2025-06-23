@@ -31,7 +31,6 @@ const SymptomTracker = ({ onBookConsultation }: SymptomTrackerProps) => {
   };
   
   const handleBookWithSymptoms = () => {
-    // In a real app, we would pass the symptoms data to the consultation booking form
     onBookConsultation();
   };
 
