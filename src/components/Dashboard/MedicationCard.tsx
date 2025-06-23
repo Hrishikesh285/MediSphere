@@ -13,14 +13,12 @@ interface MedicationCardProps {
 const MedicationCard = ({ medication, onTake, onSnooze }: MedicationCardProps) => {
   const [showSnoozeOptions, setShowSnoozeOptions] = useState(false);
   const [snoozeDuration, setSnoozeDuration] = useState(15);
-  
-  // Get today's schedule
+
   const todaySchedule = medication.schedule.times.map(time => {
     const [hours, minutes] = time.split(':');
     const scheduledTime = new Date();
     scheduledTime.setHours(parseInt(hours), parseInt(minutes), 0, 0);
-    
-    // Check if already taken based on history
+  
     const existingDose = medication.history.find(dose => 
       new Date(dose.scheduledTime).toDateString() === new Date().toDateString() &&
       format(new Date(dose.scheduledTime), 'HH:mm') === time
