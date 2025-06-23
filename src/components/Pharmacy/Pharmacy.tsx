@@ -19,8 +19,7 @@ const Pharmacy = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterLowStock, setFilterLowStock] = useState(false);
   const [showCart, setShowCart] = useState(false);
-  
-  // Filter medications based on search term and filter
+
   const filteredMedications = medications.filter(med => {
     const matchesSearch = med.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          med.dosage.toLowerCase().includes(searchTerm.toLowerCase());
@@ -32,7 +31,6 @@ const Pharmacy = () => {
     return matchesSearch;
   });
   
-  // Count low stock medications
   const lowStockCount = medications.filter(med => med.pillsLeft <= med.refillAt).length;
 
   const container = {
